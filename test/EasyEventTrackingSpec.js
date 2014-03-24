@@ -173,4 +173,23 @@ describe("when an attribute with html5 data annotations on the track-event eleme
   });
 
 });
+
+describe("when a select with track-change is changed", function(){
+    beforeEach(function() {
+      _gaq = [];
+      $('#testArea').html('');
+      $('#testArea').append('<select id="track" class="track-change" data-action="action!" data-category="category-here" data-label="label-here">'
+                            +' <option value="value1">Value 1</option>'
+                            +' <option value="value2">Value 2</option>'
+                            +'</select>');
+    });
+
+    it("selected value should be passed to tracking value", function(){
+      easyEventTracker = new EasyEventTracking(_gaq);
+
+      $('#track').prop('selectedIndex', 1);
+
+      expect(_gaq[0][4]).toEqual('value2');
+    });
+});
       
